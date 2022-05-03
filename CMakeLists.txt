@@ -1,11 +1,21 @@
-﻿# CMakeList.txt : CMake project for daedalus-bot, include source and define
+﻿# CMakeList.txt : CMake project for daedalus-linux, include source and define
 # project specific logic here.
 #
 cmake_minimum_required (VERSION 3.8)
-
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+#set(CMAKE_CXX_EXTENSIONS OFF)
 project ("daedalus-bot")
 
 # Add source to this project's executable.
-add_executable (daedalus-bot "daedalus-bot.cpp" "daedalus-bot.h")
+add_subdirectory(binapi)
 
-# TODO: Add tests and install targets if needed.
+file(GLOB DAEDALUS_SRC
+        "${PROJECT_SOURCE_DIR}/src/*.cpp"
+        "${PROJECT_SOURCE_DIR}/src/strategies/*.cpp"
+        )
+include_directories(
+        ${PROJECT_SOURCE_DIR}/include
+)
+add_executable (daedalus-bot "main.cpp" ${DAEDALUS_SRC})
+target_link_libraries(daedalus-bot PUBLIC binapi)
