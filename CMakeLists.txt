@@ -7,7 +7,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #set(CMAKE_CXX_EXTENSIONS OFF)
 project ("daedalus-bot")
 
-# Add source to this project's executable.
 add_subdirectory(binapi)
 
 file(GLOB DAEDALUS_SRC
@@ -19,3 +18,11 @@ include_directories(
 )
 add_executable (daedalus-bot "main.cpp" ${DAEDALUS_SRC})
 target_link_libraries(daedalus-bot PUBLIC binapi)
+
+
+# Add Tests
+enable_testing()
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
+add_executable(daedalus-test "test/test.cpp" ${DAEDALUS_SRC})
+target_link_libraries(daedalus-test ${GTEST_LIBRARIES} pthread)
