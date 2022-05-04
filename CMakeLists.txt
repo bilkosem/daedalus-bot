@@ -7,6 +7,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #set(CMAKE_CXX_EXTENSIONS OFF)
 project ("daedalus-bot")
 
+find_package(nlohmann_json REQUIRED)
+find_library(TALIB ta_lib)
+##ADD_DEFINITIONS(-DBOOST_LOG_DYN_LINK)
 add_subdirectory(binapi)
 
 file(GLOB DAEDALUS_SRC
@@ -18,7 +21,7 @@ include_directories(
 )
 add_executable (daedalus-bot "main.cpp" ${DAEDALUS_SRC})
 target_link_libraries(daedalus-bot PUBLIC binapi)
-
+target_link_libraries(daedalus-bot PRIVATE nlohmann_json::nlohmann_json ${TALIB})
 
 # Add Tests
 enable_testing()
