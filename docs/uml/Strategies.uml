@@ -1,0 +1,21 @@
+@startuml
+
+class TradeBuilder {
+ +setStrategy(strategyName : std::string)
+ +setEnterOrder(order : Order)
+ +setExitOrder(order : Order)
+ +dumpJson(): std::string
+ +build(): Trade
+}
+abstract class BaseStrategy {
+ +Trade evaluate()
+}
+
+class InheritedStrategy {
+
+}
+
+BaseStrategy*--TradeBuilder
+BaseStrategy<|--InheritedStrategy
+
+@enduml
